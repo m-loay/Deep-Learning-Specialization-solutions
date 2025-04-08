@@ -1,23 +1,25 @@
 import numpy as np
 
+
 ### ex1
 def update_parameters_with_gd_test_case():
     np.random.seed(1)
     learning_rate = 0.01
-    W1 = np.random.randn(2,3)
-    b1 = np.random.randn(2,1)
-    W2 = np.random.randn(3,2)
-    b2 = np.random.randn(3,1)
+    W1 = np.random.randn(2, 3)
+    b1 = np.random.randn(2, 1)
+    W2 = np.random.randn(3, 2)
+    b2 = np.random.randn(3, 1)
 
-    dW1 = np.random.randn(2,3)
-    db1 = np.random.randn(2,1)
-    dW2 = np.random.randn(3,2)
-    db2 = np.random.randn(3,1)
-    
+    dW1 = np.random.randn(2, 3)
+    db1 = np.random.randn(2, 1)
+    dW2 = np.random.randn(3, 2)
+    db2 = np.random.randn(3, 1)
+
     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
     grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
-    
+
     return parameters, grads, learning_rate
+
 
 """
 def update_parameters_with_sgd_checker(function, inputs, outputs):
@@ -40,10 +42,10 @@ def random_mini_batches_test_case():
 ### ex 3
 def initialize_velocity_test_case():
     np.random.seed(1)
-    W1 = np.random.randn(3,2)
-    b1 = np.random.randn(3,1)
-    W2 = np.random.randn(3,3)
-    b2 = np.random.randn(3,1)
+    W1 = np.random.randn(3, 2)
+    b1 = np.random.randn(3, 1)
+    W2 = np.random.randn(3, 3)
+    b2 = np.random.randn(3, 1)
     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
     return parameters
 
@@ -51,40 +53,36 @@ def initialize_velocity_test_case():
 ### ex 4
 def update_parameters_with_momentum_test_case():
     np.random.seed(1)
-    W1 = np.random.randn(2,3)
-    b1 = np.random.randn(2,1)
-    W2 = np.random.randn(3,2)
-    b2 = np.random.randn(3,1)
+    W1 = np.random.randn(2, 3)
+    b1 = np.random.randn(2, 1)
+    W2 = np.random.randn(3, 2)
+    b2 = np.random.randn(3, 1)
 
-    dW1 = np.random.randn(2,3)
-    db1 = np.random.randn(2,1)
-    dW2 = np.random.randn(3,2)
-    db2 = np.random.randn(3,1)
-   
+    dW1 = np.random.randn(2, 3)
+    db1 = np.random.randn(2, 1)
+    dW2 = np.random.randn(3, 2)
+    db2 = np.random.randn(3, 1)
+
     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
     grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
-    
-    v = {'dW1': np.array([[ 0.,  0.,  0.],
-                          [ 0.,  0.,  0.]]), 
-         'dW2': np.array([[ 0.,  0.],
-                          [ 0.,  0.],
-                          [ 0.,  0.]]), 
-         'db1': np.array([[ 0.],
-                          [ 0.]]), 
-         'db2': np.array([[ 0.],
-                          [ 0.],
-                          [ 0.]])}
-    
+
+    v = {
+        'dW1': np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]),
+        'dW2': np.array([[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]]),
+        'db1': np.array([[0.0], [0.0]]),
+        'db2': np.array([[0.0], [0.0], [0.0]]),
+    }
+
     return parameters, grads, v
 
 
 ### ex 5
 def initialize_adam_test_case():
     np.random.seed(1)
-    W1 = np.random.randn(2,3)
-    b1 = np.random.randn(2,1)
-    W2 = np.random.randn(3,2)
-    b2 = np.random.randn(3,1)
+    W1 = np.random.randn(2, 3)
+    b1 = np.random.randn(2, 1)
+    W2 = np.random.randn(3, 2)
+    b2 = np.random.randn(3, 1)
     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
     return parameters
 
@@ -92,44 +90,37 @@ def initialize_adam_test_case():
 ### ex 6
 def update_parameters_with_adam_test_case():
     np.random.seed(1)
-    v, s = ({'dW1': np.array([[ 0.,  0.,  0.], # (2, 3)
-                              [ 0.,  0.,  0.]]), 
-             'dW2': np.array([[ 0.,  0.],      # (3, 2)
-                              [ 0.,  0.],
-                              [ 0.,  0.]]), 
-             'db1': np.array([[ 0.],           # (2, 1)
-                              [ 0.]]), 
-             'db2': np.array([[ 0.],          # (3, 1)
-                              [ 0.],
-                              [ 0.]])}, 
-            {'dW1': np.array([[ 0.,  0.,  0.], # (2, 3)
-                              [ 0.,  0.,  0.]]), 
-             'dW2': np.array([[ 0.,  0.],      # (3, 2)
-                              [ 0.,  0.],
-                              [ 0.,  0.]]), 
-             'db1': np.array([[ 0.],           # (2, 1)
-                              [ 0.]]), 
-             'db2': np.array([[ 0.],           # (3, 1)
-                              [ 0.],
-                              [ 0.]])})
-    W1 = np.random.randn(2,3)
-    b1 = np.random.randn(2,1)
-    W2 = np.random.randn(3,2)
-    b2 = np.random.randn(3,1)
+    v, s = (
+        {
+            'dW1': np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]),  # (2, 3)
+            'dW2': np.array([[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]]),  # (3, 2)
+            'db1': np.array([[0.0], [0.0]]),  # (2, 1)
+            'db2': np.array([[0.0], [0.0], [0.0]]),  # (3, 1)
+        },
+        {
+            'dW1': np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]),  # (2, 3)
+            'dW2': np.array([[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]]),  # (3, 2)
+            'db1': np.array([[0.0], [0.0]]),  # (2, 1)
+            'db2': np.array([[0.0], [0.0], [0.0]]),  # (3, 1)
+        },
+    )
+    W1 = np.random.randn(2, 3)
+    b1 = np.random.randn(2, 1)
+    W2 = np.random.randn(3, 2)
+    b2 = np.random.randn(3, 1)
 
-    dW1 = np.random.randn(2,3)
-    db1 = np.random.randn(2,1)
-    dW2 = np.random.randn(3,2)
-    db2 = np.random.randn(3,1)
-    
+    dW1 = np.random.randn(2, 3)
+    db1 = np.random.randn(2, 1)
+    dW2 = np.random.randn(3, 2)
+    db2 = np.random.randn(3, 1)
+
     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
     grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
-    
+
     t = 2
     learning_rate = 0.02
     beta1 = 0.8
     beta2 = 0.888
     epsilon = 1e-2
-    
+
     return parameters, grads, v, s, t, learning_rate, beta1, beta2, epsilon
-    
