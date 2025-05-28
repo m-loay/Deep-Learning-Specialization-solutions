@@ -5,6 +5,36 @@ import sklearn
 import sklearn.datasets
 import sklearn.linear_model
 import scipy.io
+from pathlib import Path
+import os
+
+
+def get_root_folder():
+    """
+    Locate the root project folder by searching for a marker file (e.g., .projectroot).
+    If not found, assume the current working directory is the root.
+    """
+    # Start from the current working directory (for Jupyter Notebooks)
+    current_path = Path(os.getcwd()).resolve()
+
+    # If running as a script, start from the script's directory
+    if "__file__" in globals():
+        current_path = Path(__file__).resolve().parent
+
+    # Traverse up the directory tree to find the root folder
+    for parent in current_path.parents:
+        if (parent / ".projectroot").exists():  # Check for a marker file
+            return parent
+    return current_path  # Fallback to the current directory
+
+
+def get_folder_path(folder_name):
+    """
+    Get the absolute path of a folder in the root project folder.
+    """
+    root_folder = get_root_folder()
+    folder_path = root_folder / folder_name
+    return folder_path.resolve()
 
 
 def sigmoid(x):
@@ -223,7 +253,7 @@ def predict(X, y, parameters):
     """
 
     m = X.shape[1]
-    p = np.zeros((1, m), dtype=np.int)
+    p = np.zeros((1, m), dtype=int)
 
     # Forward propagation
     a3, caches = forward_propagation(X, parameters)
@@ -264,7 +294,13 @@ def compute_cost(a3, Y):
 
 
 def load_dataset():
-    train_dataset = h5py.File('datasets/train_catvnoncat.h5', "r")
+    resources_dir: Path = get_folder_path("_resources_deep_learning") / "c2" / "W1_A2" / "datasets"
+    dataset_path: Path = resources_dir / "train_catvnoncat.h5"
+    if dataset_path.exists():
+        print("it exists")
+    else:
+        print("it doesnt exist")
+    train_dataset = h5py.File(dataset_path, "r")
     train_set_x_orig = np.array(train_dataset["train_set_x"][:])  # your train set features
     train_set_y_orig = np.array(train_dataset["train_set_y"][:])  # your train set labels
 
@@ -353,7 +389,14 @@ def plot_decision_boundary(model, X, y):
 
 
 def load_2D_dataset():
-    data = scipy.io.loadmat('datasets/data.mat')
+    resources_dir: Path = get_folder_path("_resources_deep_learning") / "c2" / "W1_A2" / "datasets"
+    dataset_path: Path = resources_dir / "data.mat"
+    if dataset_path.exists():
+        print("it exists")
+    else:
+        print("it doesnt exist")
+    print(f"Trying to open: {dataset_path}")  # ADD THIS LINE
+    data = scipy.io.loadmat(str(dataset_path))
     train_X = data['X'].T
     train_Y = data['y'].T
     test_X = data['Xval'].T
