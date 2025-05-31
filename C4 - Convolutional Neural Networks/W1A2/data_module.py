@@ -30,7 +30,6 @@ class DataModule:
         val_split: float = 0.1,
         random_state: int = 42,
         batch_size: int = 64,
-        shuffle_buffer_size: int = 1000,
         use_tf_dataset: bool = False,
     ):
         """
@@ -50,7 +49,6 @@ class DataModule:
 
         # For tf.data.Dataset creation
         self.batch_size = batch_size
-        self.shuffle_buffer_size = shuffle_buffer_size
         self.use_tf_dataset = use_tf_dataset
 
         # Internal holders for raw NumPy splits
@@ -85,8 +83,8 @@ class DataModule:
             raise ValueError("`dataset` must be 'signs' or 'face'.")
 
         # --- 2) Normalize inputs to [0, 1] as float32 ---
-        X_train = X_train_orig.astype(np.float32) / 255.0
-        X_test = X_test_orig.astype(np.float32) / 255.0
+        X_train = X_train_orig / 255.0
+        X_test = X_test_orig / 255.0
 
         # --- 3) Prepare labels based on y_type ---
         if self.y_type == "one_hot_key":
@@ -94,11 +92,11 @@ class DataModule:
             Y_train = convert_to_one_hot(Y_train_orig, num_classes).T  # shape (m, num_classes)
             Y_test = convert_to_one_hot(Y_test_orig, num_classes).T
         elif self.y_type == "one_val":
-            Y_train = Y_train_orig.reshape(-1).astype(np.int32)  # (m,)
-            Y_test = Y_test_orig.reshape(-1).astype(np.int32)
+            Y_train = Y_train_orig.reshape(-1)  # (m,)
+            Y_test = Y_test_orig.reshape(-1)
         elif self.y_type == "binary_val":
-            Y_train = Y_train_orig.T.astype(np.float32)  # (m,)
-            Y_test = Y_test_orig.T.astype(np.float32)
+            Y_train = Y_train_orig.T  # (m,)
+            Y_test = Y_test_orig.T
         else:
             raise ValueError("`y_type` must be 'one_hot_key', 'one_val', or 'binary_val'.")
 
@@ -117,7 +115,6 @@ class DataModule:
         if self.use_tf_dataset:
             # 5a) Training dataset: shuffle + batch
             train_ds = tf.data.Dataset.from_tensor_slices((self.X_train, self.Y_train))
-            train_ds = train_ds.shuffle(buffer_size=self.shuffle_buffer_size)
             train_ds = train_ds.batch(self.batch_size)
 
             # 5b) Validation dataset: batch only

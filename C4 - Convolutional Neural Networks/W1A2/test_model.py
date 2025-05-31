@@ -19,7 +19,6 @@ def train_sign_seq():
         y_type="one_hot_key",
         val_split=0.1,
         batch_size=64,
-        shuffle_buffer_size=1000,
         use_tf_dataset=True,
     )
     dm.setup()
@@ -52,7 +51,6 @@ def train_sign_api():
         y_type="one_hot_key",
         val_split=0.1,
         batch_size=64,
-        shuffle_buffer_size=1000,
         use_tf_dataset=True,
     )
     dm.setup()
@@ -64,7 +62,7 @@ def train_sign_api():
         units=6,
         y_type="one_hot_key",
     )
-    mm.build_and_compile(use_lr_schedule=True)
+    mm.build_and_compile(use_lr_schedule=False)
 
     trainer = Trainer(
         data_module=dm,
@@ -85,7 +83,6 @@ def train_face_seq():
         y_type="binary_val",
         val_split=0.1,
         batch_size=64,
-        shuffle_buffer_size=1000,
         use_tf_dataset=True,
     )
     dm.setup()
@@ -118,7 +115,6 @@ def train_face_api():
         y_type="binary_val",
         val_split=0.1,
         batch_size=64,
-        shuffle_buffer_size=1000,
         use_tf_dataset=True,
     )
     dm.setup()
@@ -144,9 +140,9 @@ def train_face_api():
 
 def main():
     # train_sign_seq()
-    train_sign_api()
+    # train_sign_api()
     # train_face_seq()
-    # train_face_api()
+    train_face_api()
 
 
 if __name__ == "__main__":
