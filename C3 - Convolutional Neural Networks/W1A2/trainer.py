@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 from pathlib import Path
-from keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping
 import tensorflow as tf  # for isinstance checks
 
 

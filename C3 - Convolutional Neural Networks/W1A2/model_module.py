@@ -1,8 +1,6 @@
 # model_module.py
-
-import tensorflow as tf
 from keras.optimizers import Adam
-from tensorflow.keras.optimizers.schedules import ExponentialDecay
+from keras.optimizers.schedules import ExponentialDecay
 
 
 class ModelModule:
